@@ -21,6 +21,13 @@ class GoogleSitemapController extends Controller {
 		'index',
 		'sitemap'	
 	);
+	
+	public function init() {
+		parent::init();
+		if (class_exists('DynamicCache')) {
+			header(DynamicCache::config()->optOutHeaderString);
+		}
+	}
 
 	/**
 	 * Default controller action for the sitemap.xml file. Renders a index
