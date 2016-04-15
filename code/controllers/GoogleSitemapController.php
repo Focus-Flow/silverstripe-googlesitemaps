@@ -63,7 +63,7 @@ class GoogleSitemapController extends Controller
      */
     public function sitemap()
     {
-        $class = $this->request->param('ID');
+        $class = $this->unsanitiseClassName($this->request->param('ID'));
         $page = $this->request->param('OtherID');
 
         if (GoogleSitemap::enabled() && $class && $page) {
@@ -81,5 +81,14 @@ class GoogleSitemapController extends Controller
         } else {
             return new SS_HTTPResponse('Page not found', 404);
         }
+    }
+
+    /**
+     * Unsanitise a namespaced class' name from a URL param
+     * @return string
+     */
+    protected function unsanitiseClassName($class)
+    {
+        return str_replace('-', '\\', $class);
     }
 }
